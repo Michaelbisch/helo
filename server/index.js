@@ -16,4 +16,5 @@ massive(CONNECTION_STRING).then(db => {
 
 app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`))
 
-app.post('/auth/register', ctrl.register)
+app.post('/auth/register', ctrl.register);
+app.post('/auth/login', ctrl.login)

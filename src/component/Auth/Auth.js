@@ -9,7 +9,8 @@ class Auth extends Component{
             password: '',
             user: {}
         }
-        this.registerUser=this.registerUser.bind(this)
+        this.registerUser=this.registerUser.bind(this);
+        this.login=this.login.bind(this);
     }
     handleUsername(val) {
         this.setState({
@@ -32,9 +33,22 @@ class Auth extends Component{
 
                 this.props.history.push('/dashboard')
             } catch(err) {
-                alert('Could not log in')
+                alert(err)
             }
         
+    }
+    async login(){
+        let user = {
+            username: this.state.username,
+            password: this.state.password
+        }
+        try {
+            let res = await axios.post('/auth/login', user)
+            this.props.history.push('/dashboard') 
+            console.log(res)
+        } catch(err) {
+            alert('Incorrect login information')
+        }
     }
     render(){
         // console.log()
@@ -42,7 +56,7 @@ class Auth extends Component{
             <div>
                 <input type='text' placeholder='Name' value={this.state.username} onChange={ e => this.handleUsername(e.target.value)}></input>
                 <input type='password' placeholder='Name' value={this.state.password} onChange={ e => this.handlePassword(e.target.value)}></input>
-                <button>Login</button>
+                <button onClick={this.login}>Login</button>
                 <button onClick={this.registerUser}>Register</button>
             </div>
         )
