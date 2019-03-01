@@ -1,6 +1,6 @@
 module.exports = {
     register: async (req, res) => {
-        console.log(req.body)
+        // console.log(req.body)
         const { username, password } = req.body
         const db = req.app.get('db')
 
@@ -21,7 +21,7 @@ module.exports = {
         }
         if(user.username == username && user.password == password){
             res.status(200).send(user)
-            console.log(user)
+            // console.log(user)
             
         }
     }

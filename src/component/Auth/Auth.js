@@ -1,5 +1,7 @@
-import React, {Component} from 'react'
-import axios from 'axios'
+import React, {Component} from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { userInfo } from '../../ducks/reducer'
 
 class Auth extends Component{
     constructor() {
@@ -30,6 +32,7 @@ class Auth extends Component{
         try {
 
             axios.post('/auth/register', user)
+            this.props.userInfo(user)
 
                 this.props.history.push('/dashboard')
             } catch(err) {
@@ -44,8 +47,9 @@ class Auth extends Component{
         }
         try {
             let res = await axios.post('/auth/login', user)
+            this.props.userInfo(res.data)
+            console.log(res.data)
             this.props.history.push('/dashboard') 
-            console.log(res)
         } catch(err) {
             alert('Incorrect login information')
         }
@@ -63,4 +67,4 @@ class Auth extends Component{
     }
 }
 
-export default Auth
+export default connect(null, {userInfo})(Auth)
